@@ -7,26 +7,28 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	
-	<div class="logo">
-		<img src="img/Logo.png" alt="">
-	</div>
-	<div class="form">
-		<form name="login" method="post" action="">
-			<h1>Log in</h1>
-			<input name="email" type="email" id="email" placeholder="E-Mail" value=""></input>
-			<input name="password" type="password" id="password" placeholder="Password" value=""></input>
-			<p class="error">E-Mail or password is incorrect</p>
-			<input type="submit" id="submit" value="Login"></input>
-		</form>
-	</div>
-	<div class="contain">
-		<div class="user">
-			<img src="img/Oval 2.png" alt="">
-			<h1>Helena Joseph</h1>
-			<input type="button" name="button" id="" value="Logout">
+	<header class="header">
+		<div class="header__logo">
+			<img class="logo__img"src="img/Logo.png" alt="">
 		</div>
-	</div>
+		<div class="header__form">
+			<form class="form__authorization" name="login" method="post" action="">
+				<h1 class="authorization__name">Log in</h1>
+				<input class="authorization__email" name="email" type="email" id="email" placeholder="E-Mail" value=""></input>
+				<input class="authorization__password" name="password" type="password" id="password" placeholder="Password" value=""></input>
+				<p class="authorization__error invisible-block">E-Mail or password is incorrect</p>
+				<input class="authorization__button" type="submit" id="submit" value="Login"></input>
+			</form>
+		</div>
+		<div class="header__contain invisible-block">
+			<div class="contain__user">
+				<img class="user__avatar" src="img/Oval 2.png" alt="">
+				<h1 class="user__name">Helena Joseph</h1>
+				<input class="user__exit-button" type="submit" name="button" id="" value="Logout">
+			</div>
+		</div>
+	</header>
 	<script src="js/script.js"></script>
+	<script src="js/secondary-functions.js"></script>
 </body>
 </html>

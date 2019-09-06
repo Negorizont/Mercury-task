@@ -1,67 +1,45 @@
-var formContainer = document.querySelector('.form')
+var formContainer = document.querySelector(".header__form");
 var form = document.forms.login;
-var containUser = document.querySelector('.contain');
+var error = form.querySelector("p");
+var containUser = document.querySelector(".header__contain");
 
-//авторизация пользователя
-var loginUser = function () {
-	formContainer.style.display = 'none';
-	containUser.style.display = 'block';
-	(form.elements.email).style.border = "none";
-	(form.elements.email).style.color = "#262626";
-	(form.elements.password).style.border = "none";
-}
-
-//выводим ошибку
-var loggedIncorrect = function () {
-	(form.querySelector('p')).style.display = 'block';
-	(form.elements.email).style.border = "1px solid #ED4159";
-	(form.elements.email).style.color = "#ED4159";
-	(form.elements.password).style.border = "1px solid #ED4159";
-}
-
-
-form.addEventListener ('submit', function(e) {
-	//отменяем действия браузера
-	e.preventDefault()
-
-	//сохраняем введённые данные в объект
-	var user = {
-		email: form.email.value,
-		password: form.password.value
-	}
-
-	//перевод в json
-	var json = JSON.stringify(user);
-
-	//отправляем данные на сервер
-	let request = new XMLHttpRequest();
-
-	//выполняем пост запрос по адресу
-	request.open("POST", "https://us-central1-mercdev-academy.cloudfunctions.net/login", true);
-	request.setRequestHeader('content-type', 'application/json');
-
-	//отправка данных
-	request.send(json);
-
-	//проверка на ответ
-	request.onreadystatechange = function () {
-    	if (request.readyState == 4 && request.status == 200)
-        	loginUser();
-        else if (containUser.style.display != 'block') {
-        	loggedIncorrect();
-    	}
-	}
-});
-
-//выход с аккаунта
-var unlog = function(){
-	var logout = containUser.querySelector('input');
-
-	logout.addEventListener('click', function () {
-		(form.querySelector('p')).style.display = 'none';
-		formContainer.style.display = 'block';
-		containUser.style.display = 'none';
-	});
+var loginUser = function() {
+  formContainer.classList.add("invisible-block");
+  containUser.classList.remove("invisible-block");
+  form.elements.email.style.border = "none";
+  form.elements.email.style.color = "#262626";
+  form.elements.password.style.border = "none";
 };
-unlog();
 
+var loggedIncorrect = function() {
+  error.classList.remove("invisible-block");
+  form.elements.email.style.border = "1px solid #ED4159";
+  form.elements.email.style.color = "#ED4159";
+  form.elements.password.style.border = "1px solid #ED4159";
+};
+
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  var user = {
+    email: form.email.value,
+    password: form.password.value
+  };
+
+  let response = fetch(
+    "https://us-central1-mercdev-academy.cloudfunctions.net/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify(user)
+    }
+  ).then(function(response) {
+    if (response.status == 200) {
+      loginUser();
+    } else {
+      loggedIncorrect();
+    }
+  });
+});
